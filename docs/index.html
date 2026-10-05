@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PFO 2 · Gestor de Tareas</title>
+  <style>
+    :root { --bg:#f4f6f8; --card:#fff; --text:#1f2933; --muted:#5f6b7a; --accent:#2563eb; --code:#eef1f5; }
+    @media (prefers-color-scheme: dark) {
+      :root { --bg:#0f141a; --card:#18202a; --text:#e5e9ef; --muted:#9aa5b4; --accent:#60a5fa; --code:#222c38; }
+    }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:system-ui, sans-serif; background:var(--bg); color:var(--text); line-height:1.6; }
+    main { max-width:820px; margin:0 auto; padding:2.5rem 1rem; }
+    header p { color:var(--muted); margin-top:0; }
+    section { background:var(--card); border-radius:12px; padding:1.25rem 1.5rem; margin:1.25rem 0;
+              box-shadow:0 2px 10px rgba(0,0,0,.06); }
+    h1 { margin-bottom:.25rem; } h2 { margin-top:0; font-size:1.2rem; }
+    table { width:100%; border-collapse:collapse; font-size:.95rem; }
+    th, td { text-align:left; padding:.45rem .5rem; border-bottom:1px solid var(--code); }
+    code, pre { background:var(--code); border-radius:6px; font-size:.9rem; }
+    code { padding:.1rem .35rem; }
+    pre { padding:.8rem 1rem; overflow-x:auto; }
+    a { color:var(--accent); }
+    .badge { display:inline-block; font-size:.75rem; font-weight:600; padding:.1rem .5rem; border-radius:999px;
+             background:var(--accent); color:#fff; }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Sistema de Gestión de Tareas</h1>
+    <p>PFO 2 · Programación sobre Redes · TSDS — Guillermo Benítez</p>
+  </header>
+
+  <section>
+    <h2>Descripción</h2>
+    <p>API REST en <strong>Flask</strong> con registro e inicio de sesión de usuarios, persistencia en
+      <strong>SQLite</strong> y contraseñas hasheadas con <code>werkzeug.security</code> (scrypt + salt).
+      Incluye un cliente de consola que consume la API.</p>
+    <p><a href="https://github.com/guillermohbenitez/pfo2-gestor-tareas">Ver código fuente en GitHub →</a></p>
+  </section>
+
+  <section>
+    <h2>Endpoints</h2>
+    <table>
+      <tr><th>Método</th><th>Ruta</th><th>Función</th></tr>
+      <tr><td><span class="badge">POST</span></td><td><code>/registro</code></td><td>Crea un usuario con contraseña hasheada</td></tr>
+      <tr><td><span class="badge">POST</span></td><td><code>/login</code></td><td>Verifica las credenciales</td></tr>
+      <tr><td><span class="badge">GET</span></td><td><code>/tareas</code></td><td>HTML de bienvenida (requiere autenticación)</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2>Cómo ejecutarlo</h2>
+<pre>pip install -r requirements.txt
+python servidor.py      # inicia la API en http://127.0.0.1:5000
+python cliente.py       # en otra terminal</pre>
+    <p>GitHub Pages solo sirve contenido estático, por eso la API se ejecuta de forma local.</p>
+  </section>
+
+  <section>
+    <h2>¿Por qué hashear contraseñas?</h2>
+    <p>Para que, ante una filtración de la base de datos, nadie pueda conocer las contraseñas reales. El hash
+      es de un solo sentido; la sal aleatoria evita las <em>rainbow tables</em> y un algoritmo lento como scrypt
+      encarece los ataques de fuerza bruta.</p>
+  </section>
+
+  <section>
+    <h2>Ventajas de SQLite</h2>
+    <p>No necesita servidor ni instalación (viene con Python), toda la base es un único archivo, ofrece
+      persistencia real con SQL estándar y restricciones como <code>UNIQUE</code>, y es liviano para un proyecto de
+      este tamaño.</p>
+  </section>
+</main>
+</body>
+</html>
